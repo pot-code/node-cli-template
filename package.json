@@ -1,7 +1,5 @@
 {
-  "name": "gjy-search",
-  "version": "1.0.0",
-  "description": "A tool used in xrebirth station builder series",
+  "version": "0.0.1",
   "scripts": {
     "test": "jest",
     "test:watch": "test --watch",
