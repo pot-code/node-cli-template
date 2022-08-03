@@ -3,9 +3,10 @@
   "scripts": {
     "test": "jest",
     "test:watch": "test --watch",
-    "build": "npm run build:clean && esbuild src/main.ts --bundle --minify --platform=node --target=node10.4 --outfile=build/app.js",
-    "build:clean": "rm build/*",
-    "build:dev": "esbuild src/main.ts --bundle --platform=node --target=node10.4 --sourcemap --outfile=build/app.js",
+    "build:clean": "rm -rf build/*",
+    "build:base": "esbuild src/main.ts --bundle --platform=node --format=esm --outfile=build/app.js --external:./node_modules/*",
+    "build:prod": "npm run build:clean && npm run build:base -- --minify",
+    "build:dev": "npm run build:base -- --sourcemap",
     "build:watch": "npm run build:dev -- --watch"
   },
   "bin": "build/app.js",
@@ -13,9 +14,10 @@
     "build"
   ],
   "keywords": [
-    "cli",
-    "scraper"
+    "node",
+    "template"
   ],
+  "type": "module",
   "author": "pot-code",
   "license": "GPL",
   "devDependencies": {
