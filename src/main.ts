@@ -1,34 +1,26 @@
-#!/usr/bin/env node
-import { Command } from 'commander';
-import winston from 'winston';
+import { Command } from 'commander'
+import { resolve } from 'path'
+import { readFileSync } from 'fs'
+import generate from './cmd/hello-world/index.js'
+import logger from './lib/log/index.js'
+import { getDirname } from './utils/runtime.js'
 
-const app = new Command();
+const pkg = JSON.parse(readFileSync(resolve(getDirname(import.meta.url), '../package.json'), 'utf-8'))
 
-app
-  .name('hello world')
-  .version('0.0.1')
-  .option('-d, --debug', '输出诊断信息')
+const program = new Command()
+
+program
+  .name(pkg.name)
+  .description(pkg.description)
+  .version(pkg.version, '-v, --version', 'print version')
+  .showHelpAfterError()
+  .option('-vv, --verbose', 'verbose output')
   .hook('preAction', (thisCommand) => {
-    let level = 'info';
-    if (thisCommand.opts().debug) {
-      level = 'debug';
+    if (thisCommand.opts().verbose) {
+      logger.level = 'debug'
     }
-    winston.configure({
-      level,
-      format: winston.format.combine(
-        winston.format.colorize(), //
-        winston.format.simple(), //
-      ),
-      transports: [new winston.transports.Console()],
-    });
   })
-  .showHelpAfterError();
 
-app
-  .command('hello')
-  .description('hello world')
-  .action(() => {
-    console.log('hello world');
-  });
+program.addCommand(generate)
 
-app.parse();
+program.parse()

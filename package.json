@@ -1,94 +1,56 @@
 {
-  "version": "0.0.1",
-  "scripts": {
-    "test": "jest",
-    "test:watch": "test --watch",
-    "build:clean": "rm -rf build/*",
-    "build:base": "esbuild src/main.ts --bundle --platform=node --format=esm --outfile=build/app.js --external:./node_modules/*",
-    "build:prod": "npm run build:clean && npm run build:base -- --minify",
-    "build:dev": "npm run build:base -- --sourcemap",
-    "build:watch": "npm run build:dev -- --watch"
-  },
-  "bin": "build/app.js",
-  "files": [
-    "build"
-  ],
-  "keywords": [
-    "node",
-    "template"
-  ],
+  "name": "node-cli-template",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "node cli template",
   "type": "module",
-  "author": "pot-code",
-  "license": "GPL",
-  "devDependencies": {
-    "@babel/core": "^7.18.5",
-    "@babel/preset-env": "^7.18.2",
-    "@babel/preset-typescript": "^7.17.12",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^17.0.45",
-    "@typescript-eslint/eslint-plugin": "^5.28.0",
-    "@typescript-eslint/parser": "^5.28.0",
-    "babel-jest": "^28.1.1",
-    "esbuild": "^0.14.44",
-    "eslint": "^8.17.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-airbnb-typescript": "^17.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "jest": "^28.1.1",
-    "typescript": "^4.7.3"
+  "exports": "./dist/main.js",
+  "scripts": {
+    "dev": "rollup -c -w",
+    "build": "rollup -c",
+    "test": "vitest",
+    "prepare": "husky install",
+    "lint": "eslint ./src/ --ext .js,.ts --fix --ignore-path .gitignore",
+    "lint-staged": "lint-staged"
   },
+  "bin": "bin/index.js",
+  "files": [
+    "dist",
+    "bin"
+  ],
   "dependencies": {
-    "commander": "^9.3.0",
-    "winston": "^3.7.2"
+    "commander": "^10.0.1",
+    "winston": "^3.8.2",
+    "zod": "^3.21.4"
   },
-  "jest": {
-    "roots": [
-      "<rootDir>/src"
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.3",
+    "@rollup/plugin-typescript": "^11.1.1",
+    "@types/commander": "^2.12.2",
+    "@types/node": "~20.2.0",
+    "@types/winston": "^2.4.4",
+    "@typescript-eslint/eslint-plugin": "^5.59.6",
+    "@typescript-eslint/parser": "^5.59.6",
+    "eslint": "~8.40.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
+    "prettier": "^2.8.8",
+    "rollup": "^3.22.0",
+    "rollup-plugin-clear": "^2.0.7",
+    "rollup-plugin-esbuild": "^5.0.0",
+    "rollup-plugin-progress": "^1.1.2",
+    "rollup-plugin-summary": "^2.0.0",
+    "typescript": "~5.0.4",
+    "vitest": "^0.31.1"
+  },
+  "lint-staged": {
+    "*.{tsx,ts}": [
+      "npm run lint",
+      "prettier --write"
     ]
-  },
-  "eslintConfig": {
-    "extends": [
-      "airbnb-base",
-      "airbnb-typescript/base"
-    ],
-    "parserOptions": {
-      "project": "./tsconfig.json"
-    },
-    "rules": {
-      "@typescript-eslint/no-unused-vars": "off",
-      "import/extensions": "off",
-      "import/no-extraneous-dependencies": "off",
-      "import/prefer-default-export": "off",
-      "no-bitwise": "off",
-      "no-console": "warn",
-      "no-param-reassign": "off",
-      "no-plusplus": "off",
-      "implicit-arrow-linebreak": "off",
-      "operator-linebreak": "off",
-      "no-underscore-dangle": "warn",
-      "no-unused-vars": "warn",
-      "max-len": "off"
-    },
-    "ignorePatterns": [
-      "setup",
-      "*.test.ts"
-    ]
-  },
-  "babel": {
-    "env": {
-      "test": {
-        "presets": [
-          [
-            "@babel/preset-env",
-            {
-              "targets": {
-                "node": "current"
-              }
-            }
-          ],
-          "@babel/typescript"
-        ]
-      }
-    }
   }
 }
