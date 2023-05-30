@@ -18,10 +18,6 @@ Rollup 是一个 JavaScript 模块打包工具，适用于开发类库等需要�
 
 使用 https://github.com/tj/commander.js/ 作为 cli 框架
 
-## 模板引擎
-
-[EJS -- Embedded JavaScript templates](https://ejs.co/#promo)
-
 # 质量管理
 
 ## 版本管理
@@ -58,7 +54,6 @@ todo
 ```jsx
 src/ // 项目源码
 bin/ // 命令行入口文件
-templates/ // 模板文件夹
 ```
 
 ### cmd
@@ -91,7 +86,7 @@ cmd/
 
 `npm i -g .`
 
-将当前项目安装为全局 cil 命令，在任意工作目录都可以使用 `front-end-cli`
+将当前项目安装为全局 cil 命令，在任意工作目录都可以使用
 
 ## Debug
 
@@ -107,10 +102,7 @@ cmd/
       "name": "Launch Program",
       "program": "${workspaceFolder}/bin/index.js",
       "args": [
-        "generate",
-        "vue",
-        "component",
-        // 其他参数
+        // 命令行参数
       ],
     }
   ]
